@@ -4,7 +4,7 @@ console.log("Processo principal")
 // natuveTheme (forçar um tema no sistema operacional)
 // Menu (criar um menu personalizado)
 // shell (acessar links externos)
-const { app, BrowserWindow, nativeTheme, Menu, shell } = require('electron/main')
+const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
 const path = require('node:path')
 
 // Janela principal
@@ -27,15 +27,36 @@ function createWindow() {
 // Janela sobre
 function aboutWindow() {
     nativeTheme.themeSource = 'dark'
-    const about = new BrowserWindow({
-        width: 360,
-        height: 220,
-        autoHideMenuBar: true, // Esconder o menu
-        resizable: false, //Impedir redimensionamento
-        minimizable: false, // Impedir minimizar a janela
-        // titleBarStyle: 'hidden' //esconder a barra de estilo (Ex: Totem de auto atendimento)
-    })
+    // A linha abaixo obtem a janela principal
+    const main = BrowserWindow.getFocusedWindow()
+    let about
+    // Validar a janela pai
+    if (main) {
+        about = new BrowserWindow({
+            width: 320,
+            height: 160,
+            autoHideMenuBar: true, // Esconder o menu
+            resizable: false, //Impedir redimensionamento
+            minimizable: false, // Impedir minimizar a janela
+            // titleBarStyle: 'hidden' //esconder a barra de estilo (Ex: Totem de auto atendimento)
+            parent: main, // Estabelece uma hierarquia de janelas
+            modal: true,
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js')
+            }
+        })
+    }
+
     about.loadFile('./src/views/sobre.html')
+
+    // Fechar a janela quando receber mensagem do processo de rendenização
+    ipcMain.on('close-about', () => {
+        console.log("Recebi a mensage close-about")
+        // Validar se a janela foi destruida
+        if(about && !about.isDestroyed()) {
+            about.close()
+        }
+    })
 }
 
 // Execução assíncrona do aplicativo electron

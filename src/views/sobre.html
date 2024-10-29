@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Evitar ataques de injeção de código malicioso -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
     <title>Mini Dev Editor</title>
-</head>
-<body>
+    <link rel="stylesheet" href="../public/css/style.css">
 
-    <h1>Mini Dev Editor</h1>
-    <p>Arthur Garcia Volpini</p>
+</head>
+
+<body>
+    <section id="sobre">
+        <h1>Mini Dev Editor</h1>
+        <p>Arthur Garcia Volpini</p>
+        <button onclick="fechar()">OK</button>
+    </section>
+    
+    <!--Processo de rendenização-->
+    <script src="renderer.js"></script>
 </body>
+
 </html>
