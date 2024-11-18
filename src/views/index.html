@@ -6,20 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Evitar ataques de injeção de código malicioso -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
-    <title>Mini dev Editor</title>
+    <title id="titulo">Mini Dev Editor</title>
     <link rel="stylesheet" href="../public/css/style.css">
 </head>
 
 <body>
-
-    <!--Numeração de linhas-->
-    <div id="linhas">
-
-    </div>
-    <!--Editor de código-->
-    <textarea id="txtArea"></textarea>
-
-    <!--Processo de rendenização-->
+    <!-- Numeração de linhas -->
+    <div id="linhas"></div>
+    <!-- Editor de código -->
+    <!-- spellcheck="false" desativa a verificação ortográfica -->
+    <textarea id="txtArea" spellcheck="false"></textarea>
+    <!-- Processo de renderização -->
     <script src="renderer.js"></script>
 </body>
 

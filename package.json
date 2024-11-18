@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/volpini13/minidev.git"
+    "url": "https://github.com/volpini13/minidev.git"
   },
   "author": "Arthur Garcia Volpini",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/volpini13/minidev/issues"
+    "url": "https://github.com/volpini13/minidev.git"
   },
-  "homepage": "https://github.com/volpini13/minidev#readme",
+  "homepage": "https://github.com/professorjosedeassis/minidev#readme",
   "devDependencies": {
     "electron": "^33.0.1"
   }
