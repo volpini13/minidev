@@ -31,3 +31,10 @@ src
        |___ docs
 
 
+Publicando o projeto electron
+
+- Gerar um paocte executavel (Windows /Linux /Mac)
+
+Obs: por padrão o electron gera o arquivo executável na versão do sistema que foi criado
+
+O arquivo executável pode ser instalado em qualquer versão do windows sem necessidade de nenhum pré-requisito (não é necessário ter o node ou electron ou vscode instalados)
