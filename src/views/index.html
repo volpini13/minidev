@@ -15,7 +15,8 @@
     <div id="linhas"></div>
     <!-- Editor de código -->
     <!-- spellcheck="false" desativa a verificação ortográfica -->
-    <textarea id="txtArea" spellcheck="false"></textarea>
+    <!-- onkeyup Evento "soltar uma tecla" que será usado para atualizar o conteúdo do objeto file (main.js) -->
+    <textarea id="txtArea" spellcheck="false" onkeyup="update()"></textarea>
     <!-- Processo de renderização -->
     <script src="renderer.js"></script>
 </body>

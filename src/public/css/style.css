@@ -52,9 +52,9 @@ body {
 
 #linhas {
     width: 8%;
-    /*background-color: var(--amarelo);*/
+   /* background-color: var(--amarelo); */
     float: left;
-    overflow-y: auto; /* Ativar o scroll na vertical */
+    overflow-y: auto; /* ativar o scroll na vertical */
     overflow: hidden;
     text-align: right;
     padding-right: calc(1% + 7px);
@@ -66,12 +66,12 @@ body {
     /* background-color: var(--cinzaClaro); */
     color: var(--cinzaClaro);
     /* impedir o redimensionamento do campo d etexto txtArea */
-    resize: none;
+    resize: none;   
 }
 
 #txtArea:focus {
     /* remover o foco da área de texto */
-    outline: none;
+    outline: none; 
 }
 
 /* Sobre */

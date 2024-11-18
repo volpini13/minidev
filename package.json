@@ -15,8 +15,11 @@
   "bugs": {
     "url": "https://github.com/volpini13/minidev.git"
   },
-  "homepage": "https://github.com/professorjosedeassis/minidev#readme",
+  "homepage": "https://github.com/volpini13/minidev.git",
   "devDependencies": {
-    "electron": "^33.0.1"
+    "electron": "^33.2.0"
+  },
+  "dependencies": {
+    "mongoose": "^8.8.2"
   }
 }

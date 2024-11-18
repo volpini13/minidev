@@ -7,10 +7,10 @@ console.log("Processo principal")
 const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain, dialog } = require('electron/main')
 const path = require('node:path')
 
-// Importação da biblioteca file system (nativa do JavaScript) para manipular arquivos
+//importação da biblioteca file system (nativa do java script) para manipular arquivos
 const fs = require('fs')
 
-// Criação de um objeto com a estrutura básica de um arquivo
+// criação de um objeto com a estrutura básica de um arquivo
 let file = {}
 
 // janela principal
@@ -45,6 +45,7 @@ function aboutWindow() {
             autoHideMenuBar: true, //esconder o menu
             resizable: false, // impedir redimensionamento
             minimizable: false, // impedir minimizar a janela
+            //titleBarStyle: 'hidden' //esconder a barra de estilo(ex: totem de auto atendimento)
             parent: main, //estabelecer uma hierarquia de janelas
             modal: true,
             webPreferences: {
@@ -63,6 +64,7 @@ function aboutWindow() {
             about.close()
         }
     })
+
 }
 
 // execução assíncrona do aplicativo electron
@@ -92,7 +94,7 @@ const template = [
             {
                 label: 'Novo',
                 accelerator: 'CmdOrCtrl+N',
-                click: () => novoArquivo()  // Corrigido para chamar a função novoArquivo
+                click: () => novoArquivo()
             },
             {
                 label: 'Abrir',
@@ -169,34 +171,34 @@ const template = [
         submenu: [
             {
                 label: 'Amarelo',
-                click: () => win.webContents.send('set-color', "#e5b567")
+                click: () => win.webContents.send('set-color', "var(--amarelo)")
             },
             {
                 label: 'Azul',
-                click: () => win.webContents.send('set-color', "#9cdcfe")
+                click: () => win.webContents.send('set-color', "var(--azul)")
             },
             {
                 label: 'Laranja',
-                click: () => win.webContents.send('set-color', "#e87d3e")
+                click: () => win.webContents.send('set-color', "var(--laranja)")
             },
             {
                 label: 'Pink',
-                click: () => win.webContents.send('set-color', "#b05279")
+                click: () => win.webContents.send('set-color', "var(--pink)")
             },
             {
                 label: 'Roxo',
-                click: () => win.webContents.send('set-color', "#9e86c8")
+                click: () => win.webContents.send('set-color', "var(--roxo)")
             },
             {
                 label: 'Verde',
-                click: () => win.webContents.send('set-color', "#b4d273")
+                click: () => win.webContents.send('set-color', "var(--verde)")
             },
             {
                 type: 'separator'
             },
             {
                 label: 'Restaurar a cor padrão',
-                click: () => win.webContents.send('set-color', "#d6d6d6")
+                click: () => win.webContents.send('set-color', "var(--cinzaClaro)")
             }
         ]
     },
@@ -215,36 +217,36 @@ const template = [
     }
 ]
 
-// Novo arquivo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// Passo 1: Criar estrutura de um arquivo e setar o título
+// Novo arquivo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Passo 1: Criar a estrutura de um arquivo e setar o título
 // Um arquivo inicia sem título, sem conteúdo, não está salvo e o local padrão vai ser a pasta documentos
 function novoArquivo() {
-    const file = {
+    file = {
         name: "Sem título",
         content: "",
         saved: false,
-        path: app.getPath('documents') + 'Sem título.txt' // Usando a pasta 'Documents' do sistema operacional
+        path: app.getPath('documents') + 'Sem título'
     }
-
-    // console.log('Novo arquivo criado: ', file)
-    // Enviar a estrutura de um novo arquivo e título para a janela principal
+    //console.log(file)
+    //enviar ao renderizador a estrutura de um novo arquivo e título
     win.webContents.send('set-file', file)
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-// Abrir arquivo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// 2 Funções abrirArquivo() lerArquivo(caminho)
+
+// Abrir arquivo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// 2 funções abrirArquivo() lerArquivo(caminho)
 async function abrirArquivo() {
-    // Usar um módulo do electron para abrir o explorador de arquivos
+    // Usar um módulo do Electron para abrir o explorador de arquivos
     let dialogFile = await dialog.showOpenDialog({
-        defaultPath: file.path // Selecionar o arquivo no local dele
+        defaultPath: file.path //selecionar o arquivo no lacal dele
     })
     //console.log(dialogFile)
-    // Validação do botão cancelar
+    //validação do botão [cancelar]
     if (dialogFile.canceled === true) {
         return false
     } else {
-        // Abrir o arquivo
+        //abrir o arquivo
         file = {
             name: path.basename(dialogFile.filePaths[0]),
             content: lerArquivo(dialogFile.filePaths[0]),
@@ -253,14 +255,14 @@ async function abrirArquivo() {
         }
     }
     //console.log(file)
-    // Enviar arquivo para o rendenizador
+    // enviar o arquivo para o renderizador
     win.webContents.send('set-file', file)
 }
 
 function lerArquivo(filePath) {
-    // Usar o trycatch sempre que trabalhar com arquivos
+    // usar o trycatch sempre que trabalhar com arquivos
     try {
-        // A linha abaixo usa a biblioteca fs para ler um arquivo, informando o caminho e o encoding do arquivo
+        // a linha abaixo usa a biblioteca fs para ler um arquivo, informando o caminho e o encoding do arquivo
         return fs.readFileSync(filePath, 'utf-8')
     } catch (error) {
         console.log(error)
@@ -268,11 +270,11 @@ function lerArquivo(filePath) {
     }
 }
 
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-// Salvar e salvar como >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// 3 funções 1) Salvar como 2) Salvar 3) Salvar arquivo
+// Salvar e salvar como >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// 3 funções 1) Salvar como 2) Salvar 3) Salvar arquivo (fs)
 async function salvarComo() {
     let dialogFile = await dialog.showSaveDialog({
         defaultPath: file.path
@@ -280,7 +282,7 @@ async function salvarComo() {
     //console.log(dialogFile)
     if (dialogFile.canceled === true) {
         return false
-    }else {
+    } else {
         salvarArquivo(dialogFile.filePath)
     }
 }
@@ -293,16 +295,25 @@ function salvar() {
     }
 }
 
-function salvarArquivo() {
+function salvarArquivo(filePath) {
+    console.log(file)
     try {
-        // Uso da biblioteca fs para gravar um arquivo
+        // uso da biblioteca fs para gravar um arquivo
         fs.writeFile(filePath, file.content, (error) => {
             file.path = filePath
             file.saved = true
             file.name = path.basename(filePath)
+            // Alterar o título ao salvar o arquivo
+            win.webContents.send('set-file', file)
         })
     } catch (error) {
         console.log(error)
     }
 }
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+// Atualização em tempo real do objeto do conteúdo do objeto file
+ipcMain.on('update-content', (event, value) => {
+    file.content = value
+})
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

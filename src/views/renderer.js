@@ -9,75 +9,82 @@ function fechar() {
    api.fecharJanela()
 }
 
-// Capturar o id de textArea (!Importante)
+// capturar o id de textArea (importante !)
 const area = document.getElementById('txtArea')
-// Iniciar o app com foco na área de digitação
+
+// iniciar o app com foco na área de digitação
 area.focus() 
+
 // Numeração automática de linhas
 function atualizarLinhas() {
-   // Capturar o id do container das linhas
+   //capturar o id do container das linhas
    const linhasNumeradas = document.getElementById('linhas')
-   // Variáveis de apoio usada na rendenização das linhas no HTML
+   //variável de apoio usada na renderização das linhas no html
    let linhasNumeradasHTML = ""
-   // Divide o conteúdo da área de texto (tag textarea) em um array de linhas, utilizando \n como delimitador (nova linha)
+   // divide o conteúdo da área de texto (tag textarea) em um array de linhas, utilizando \n como delilitador (nova linha)
    let linha = area.value.split('\n')
-   // Percorrer o array de linhas adicionando uma linha a cada loop
+   // percorrer o array de linhas adicionando um número de linha a cada loop 
    for (let i = 0; i < linha.length; i++) {
       linhasNumeradasHTML += i + 1 + '<br>'
    }
-   // Atualizar o documento HTML
+   // atualizar o documento html
    linhasNumeradas.innerHTML = linhasNumeradasHTML
 }
 
-// Iniciar automaticamente a função junto com o app (linha 1)
+// Iniciar automaticamente a função junto com o APP (linha 1)
 atualizarLinhas()
 
-// Adicionar um evento de entrada a área de texto (textarea) para atualizar as linha numeradas
-area.addEventListener('input' , () => {
+// Adicionar um evento de entrada a área de texto (textarea) para atualizar as linhas numeradas
+area.addEventListener('input', () => {
    atualizarLinhas()
 })
 
-// Adicionar evento de rolagem para sincronizar com as linhas
-area.addEventListener('scroll' , () => {
+// Adicionar um evento de rolagem a área de texto (textarea) para sincronizar com as linhas
+area.addEventListener('scroll', () => {
    document.getElementById('linhas').scrollTop = area.scrollTop
 })
 
 // Identação do código ao pressionar a tecla TAB
-area.addEventListener('keydown', (event) =>{
-   // Se a tecla TAB for pressionada
+area.addEventListener('keydown', (event) => {
+   // se a tecla TAB for pressionada
    if (event.key === 'Tab') {
-      // Ignorar o comportamento padrão
+      // ignorar o comportamento padrão
       event.preventDefault()
-      // Variáveis de apoio
+      // varíaveis de apoio
       const textarea = event.target
       const start = textarea.selectionStart
       const end = textarea.selectionEnd
-      // Definir o número de espaços para o TAB
+      // definir o número de espaços para o TAB
       // Dica: usar o "\t" para um TAB real do sistema
-      const ident = '   ' // TAB equivale a 2 espaços
+      const ident = '  ' // TAB equivale a 2 espaços
       // Adicionar a identação no ponto cursor
       textarea.value = textarea.value.substring(0, start) + ident + textarea.value.substring(end)
       // Mover o cursor para frente após a identação
-      textarea.selectionStart = textarea.selectionEnd = start + ident. length
+      textarea.selectionStart = textarea.selectionEnd = start + ident.length
    }
 })
 
-// Mudar a cor do texto
+// mudar a cor do texto
 api.setColor((event, color) => {
-   // Validação
+   // validação
    if (area) {
-      // Trocar a cor da fonte
+      // trocar a cor da fonte (style -> CSS)
       area.style.color = color
    }
 })
 
 // Novo arquivo / Abrir arquivo
 // Novo arquivo: Carregar a estrutura e mudar o título
-// Abrir arquivo: Abrir arquivo existente
+// Abrir arquivo: Abrir um arquivo existente
 api.setFile((event, file) => {
    area.value = file.content
-   // Capturar o id do titulo
+   //captura o id do título
    const nomeArquivo = document.getElementById("titulo")
    nomeArquivo.innerHTML = `${file.name} - Mini Dev Editor`
    atualizarLinhas()
 })
+
+// Atualização de conteúdo (objeto file) em tempo real
+function update() {
+   api.atualizarConteudo(area.value)
+}
